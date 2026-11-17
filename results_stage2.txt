@@ -1,0 +1,13 @@
+Stage 2: effect of the number of expert demonstration episodes (CartPole-v1, behavior cloning)
+Single training run per setting (train_and_eval, seed=0); each policy evaluated on 20 episodes, seeds 1000-1019.
+Python 3.10.8, gymnasium 0.29.1, torch 2.7.1 CPU.
+Note: the console labels were originally printed in Chinese and are translated to English here; all numbers are unchanged.
+
+Demonstration episodes 2: BC average return 381.5
+Demonstration episodes 5: BC average return 482.6
+Demonstration episodes 10: BC average return 475.0
+Demonstration episodes 20: BC average return 462.6
+Demonstration episodes 50: BC average return 462.1
+
+Reference: expert average return 496.7 (50 demonstration episodes).
+Re-running the Stage 1 script gave a BC average return of 462.8 (first run: 462.1).
