@@ -1,0 +1,38 @@
+CartPole-v1 behavior cloning, output of: python bc_cartpole.py
+(single run; Python 3.10.8, gymnasium 0.29.1, torch 2.7.1 CPU)
+
+专家平均回报: 496.7, 数据量: 24834
+epoch 1: loss = 0.3807
+epoch 2: loss = 0.2953
+epoch 3: loss = 0.2509
+epoch 4: loss = 0.1997
+epoch 5: loss = 0.1582
+epoch 6: loss = 0.1231
+epoch 7: loss = 0.1010
+epoch 8: loss = 0.0831
+epoch 9: loss = 0.0717
+epoch 10: loss = 0.0618
+epoch 11: loss = 0.0571
+epoch 12: loss = 0.0527
+epoch 13: loss = 0.0477
+epoch 14: loss = 0.0456
+epoch 15: loss = 0.0440
+epoch 16: loss = 0.0392
+epoch 17: loss = 0.0361
+epoch 18: loss = 0.0357
+epoch 19: loss = 0.0343
+epoch 20: loss = 0.0322
+epoch 21: loss = 0.0319
+epoch 22: loss = 0.0297
+epoch 23: loss = 0.0312
+epoch 24: loss = 0.0279
+epoch 25: loss = 0.0274
+epoch 26: loss = 0.0288
+epoch 27: loss = 0.0261
+epoch 28: loss = 0.0265
+epoch 29: loss = 0.0302
+epoch 30: loss = 0.0249
+BC 平均回报: 462.1(满分 500)
+
+Glossary: 专家平均回报 = expert average return; 数据量 = number of training samples;
+BC 平均回报 = behavior-cloning policy average return (max 500).
