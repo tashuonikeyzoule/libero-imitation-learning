@@ -1,0 +1,30 @@
+Stage 4: behavior cloning on Pusher-v5 with an auxiliary future-fingertip-motion loss (bc_pusher_aux.py)
+Console output, unchanged. Python 3.11 virtual environment, gymnasium 1.4.0, minari 0.5.4, mujoco 4.0.1, PyTorch CPU.
+Data: Minari mujoco/pusher/expert-v0, first N episodes. Evaluation: Pusher-v5, seeds 1000-1019.
+
+H = 5, aux weight = 0.1, epochs = 30, training seeds = [0, 1, 2], eval episodes = 20 (seeds 1000-1019)
+episodes | method   | return mean +- std (over training seeds) | final obj-goal distance mean +- std
+   (episodes 20, baseline, seed 0: return -36.0, final distance 0.254)
+   (episodes 20, baseline, seed 1: return -34.1, final distance 0.231)
+   (episodes 20, baseline, seed 2: return -35.5, final distance 0.247)
+      20 | baseline |   -35.2 +-   0.8                     | 0.244 +- 0.010
+   (episodes 20, aux, seed 0: return -37.3, final distance 0.259)
+   (episodes 20, aux, seed 1: return -35.8, final distance 0.248)
+   (episodes 20, aux, seed 2: return -36.3, final distance 0.247)
+      20 | aux      |   -36.5 +-   0.6                     | 0.252 +- 0.006
+   (episodes 50, baseline, seed 0: return -34.0, final distance 0.242)
+   (episodes 50, baseline, seed 1: return -33.6, final distance 0.234)
+   (episodes 50, baseline, seed 2: return -32.6, final distance 0.224)
+      50 | baseline |   -33.4 +-   0.6                     | 0.233 +- 0.007
+   (episodes 50, aux, seed 0: return -33.5, final distance 0.233)
+   (episodes 50, aux, seed 1: return -33.1, final distance 0.229)
+   (episodes 50, aux, seed 2: return -36.3, final distance 0.257)
+      50 | aux      |   -34.3 +-   1.4                     | 0.240 +- 0.012
+   (episodes 500, baseline, seed 0: return -33.6, final distance 0.264)
+   (episodes 500, baseline, seed 1: return -31.4, final distance 0.223)
+   (episodes 500, baseline, seed 2: return -33.7, final distance 0.258)
+     500 | baseline |   -32.9 +-   1.1                     | 0.248 +- 0.018
+   (episodes 500, aux, seed 0: return -35.5, final distance 0.293)
+   (episodes 500, aux, seed 1: return -31.9, final distance 0.231)
+   (episodes 500, aux, seed 2: return -32.6, final distance 0.243)
+     500 | aux      |   -33.3 +-   1.5                     | 0.256 +- 0.027
