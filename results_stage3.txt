@@ -1,0 +1,38 @@
+Stage 3: behavior cloning on Pusher-v5 with the Minari dataset mujoco/pusher/expert-v0
+Console output of bc_pusher.py (single run). Python 3.11 virtual environment, gymnasium 1.4.0, minari 0.5.4, mujoco 4.0.1, PyTorch CPU.
+Training used the first 500 dataset episodes; evaluation used 20 episodes in Pusher-v5, seeds 1000-1019.
+
+training pairs: (50000, 23) (50000, 7)
+Expert average return (dataset, 500 episodes): -24.8
+epoch 1: loss = 0.0384
+epoch 2: loss = 0.0360
+epoch 3: loss = 0.0354
+epoch 4: loss = 0.0351
+epoch 5: loss = 0.0348
+epoch 6: loss = 0.0346
+epoch 7: loss = 0.0344
+epoch 8: loss = 0.0343
+epoch 9: loss = 0.0342
+epoch 10: loss = 0.0340
+epoch 11: loss = 0.0339
+epoch 12: loss = 0.0339
+epoch 13: loss = 0.0338
+epoch 14: loss = 0.0337
+epoch 15: loss = 0.0337
+epoch 16: loss = 0.0336
+epoch 17: loss = 0.0335
+epoch 18: loss = 0.0334
+epoch 19: loss = 0.0333
+epoch 20: loss = 0.0334
+epoch 21: loss = 0.0332
+epoch 22: loss = 0.0332
+epoch 23: loss = 0.0332
+epoch 24: loss = 0.0331
+epoch 25: loss = 0.0331
+epoch 26: loss = 0.0330
+epoch 27: loss = 0.0329
+epoch 28: loss = 0.0329
+epoch 29: loss = 0.0329
+epoch 30: loss = 0.0328
+Random policy average return: -147.7
+BC policy average return:     -33.9
