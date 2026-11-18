@@ -2,7 +2,7 @@ Imitation Learning for Robotics: Behavior Cloning Baselines
 
 A learning project in which I build imitation-learning baselines in PyTorch, starting from the simplest setting and working toward robot manipulation. The long-term goal is to understand how policies are learned from demonstrations, as a stepping stone toward vision-language-action (VLA) models such as OpenVLA.
 
-Status: work in progress. The first baseline (CartPole) is complete. The experiments below marked "in progress" or "planned" are not done yet, and this README is updated as they are.
+Status: work in progress. Stages 1-4 below are done (CartPole, a data-size study, a simulated robot arm, and an auxiliary-loss experiment). Items under "Roadmap" are not done yet, and this README is updated as they are.
 
 Stage 1: Behavior cloning on CartPole (done)
 
@@ -60,9 +60,38 @@ One training run and 20 evaluation episodes, so small differences are not reliab
 The expert's average comes from the dataset's own episodes, not from re-running the expert on my evaluation seeds.
 Only average return is measured. I have not computed a task success rate.
 The training loss falls quickly in the first epoch and only slowly afterwards (0.0384 to 0.0328). I have not investigated why.
+Stage 4: Does predicting future arm motion help? (done, 3 training seeds)
+
+bc_pusher_aux.py tests a small, low-dimensional version of the idea in ELAN4D (He et al., CoRL 2026), where a VLA policy gets an extra training target: predicting how the robot's own keypoints will move in the future.
+
+Change to the network: the MLP trunk (23 -> 256 -> 256) now has two output heads. One predicts the 7-number action, as before. The other predicts the fingertip's displacement over the next 1 to 5 steps (15 numbers), taken from later observations in the same demonstration. The second head is used only during training and is ignored at test time.
+Loss: action MSE + 0.1 x future-displacement MSE (future targets scaled to unit standard deviation). The baseline uses the same network with weight 0.
+Setup: 20, 50 and 500 demonstration episodes; 3 training seeds each; 30 epochs; evaluation on 20 episodes (seeds 1000-1019).
+Metrics: average return, and the final distance between the object and the goal (smaller is better). Raw output: results_stage4.txt.
+Demonstration episodes	Baseline return	With future-motion loss	Baseline final distance	With future-motion loss
+20	-35.2 ± 0.8	-36.5 ± 0.6	0.244 ± 0.010	0.252 ± 0.006
+50	-33.4 ± 0.6	-34.3 ± 1.4	0.233 ± 0.007	0.240 ± 0.012
+500	-32.9 ± 1.1	-33.3 ± 1.5	0.248 ± 0.018	0.256 ± 0.027
+
+(± is the standard deviation over the 3 training seeds.)
+
+Observations:
+
+The auxiliary loss did not improve the policy in this setting. With 50 and 500 episodes the difference is within seed-to-seed variation; with 20 episodes it is slightly worse.
+Behavior cloning is already close to its 500-episode return with only 20 episodes, so this task, without any perturbation, does not seem to be data-limited.
+More data improved the return slightly but did not clearly reduce the final object-goal distance. I do not yet have a reference value (for example the distance at the start of an episode), so I cannot say how good 0.24 is.
+
+Possible reasons (hypotheses, not tested):
+
+The observation already contains joint angles, joint velocities and the fingertip position. In ELAN4D the policy sees images, so predicting robot motion adds information the input lacks; here it may add little.
+My evaluation has no distribution shift. ELAN4D's largest gains are reported under perturbations such as camera or background changes, and are small on the unperturbed benchmark.
+Future fingertip motion is largely determined by the actions themselves, so the extra target may overlap with the main one.
+
+Caveats: 3 training seeds and 20 evaluation episodes; one value of the loss weight (0.1) and horizon (5) only.
+
 Roadmap (planned, not done)
-Effect of the number of demonstration episodes and of several training seeds on the Pusher task (as done for CartPole).
-A task-specific success metric instead of average return only.
+Test hypothesis 2: evaluate under perturbed observations (for example added noise) to see whether the auxiliary loss helps under distribution shift.
+A reference for the final object-goal distance (initial distance, random policy, expert), and a success rate.
 Image observations and language-conditioned policies, as a stepping stone towards VLA models (OpenVLA).
 How to run
 bash
@@ -77,10 +106,7 @@ bash
 pip install "gymnasium[mujoco]" "minari[hf,hdf5]" torch
 python inspect_pusher_dataset.py   # downloads the dataset (about 195 MB)
 python bc_pusher.py
-Notes
-The expert is a simple scripted rule, not a trained agent.
-This is a self-study project. The code was written while learning the topic, with AI assistance for explanations and debugging.
-
+python bc_pusher_aux.py            # Stage 4: 18 training runs
 Notes
 The expert is a simple scripted rule, not a trained agent.
 This is a self-study project. The code was written while learning the topic, with AI assistance for explanations and debugging.
